@@ -1,24 +1,38 @@
 const path = require("path");
 
 module.exports = {
-    mode: "production",
-    entry: path.resolve(__dirname, "index.js"),
+  mode: "production",
+  entry: path.resolve(__dirname, "index.js"),
 
-    optimization: {
-        minimize: true
+  optimization: {
+    minimize: true,
+  },
+
+  output: {
+    clean: true,
+    globalObject: "this",
+
+    path: path.resolve(__dirname, "dist"),
+    filename: "gameface-arabic-rtl.min.js",
+
+    library: {
+      type: "umd",
+      name: "GamefaceArabicRtl",
+      umdNamedDefine: true,
     },
-
-    output: {
-        clean: true,
-        globalObject: 'this',
-
-        path: path.resolve(__dirname, "dist"),
-        filename: "gameface-arabic-rtl.min.js",
-        
-        library: {
-            type: "umd",
-            name: "GamefaceArabicRtl",
-            umdNamedDefine: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
         },
-    }
+      },
+    ],
+  },
 };
