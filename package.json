@@ -2,7 +2,7 @@
   "name": "gameface-arabic-rtl",
   "version": "0.1.0",
   "description": "Library for Arabic language support in Coherent Gameface",
-  "homepage": "https://github.com/RBerezkin/coherent-arabic-rtl",
+  "homepage": "https://github.com/Stranget0/coherent-arabic-rtl",
   "main": "dist/gameface-arabic-rtl.min.js",
   "module": "index.js",
   "es6": "index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RBerezkin/coherent-arabic-rtl"
+    "url": "git+https://github.com/Stranget0/coherent-arabic-rtl"
   },
   "keywords": [
     "coherent",
