@@ -158,7 +158,7 @@ class RTLArabic extends String {
         if (char.isEOL()) {
             this.handleEOL(char);
         } else if (char.isBracket()) {
-            this.addChar(char.toBracket());
+            index = this.addEngChar(index);
         } else if (char == "ء") {
             this.addChar(String.fromCodePoint(1569));
         } else if (char == "آ") {
