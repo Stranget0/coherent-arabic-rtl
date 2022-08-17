@@ -1,12 +1,12 @@
 import RTLArabic from "./src/RTLArabic";
 
-function process(sentence) {
-    const options = {
-        harakat: true,
-        numbers: false,
-    };
+function process(sentence, numbers = false) {
+  const options = {
+    harakat: true,
+    numbers,
+  };
 
-    return new RTLArabic(sentence, options).convert();
+  return new RTLArabic(sentence, options).convert();
 }
 
-export {process}
+export { process };

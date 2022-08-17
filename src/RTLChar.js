@@ -7,116 +7,120 @@ const MIDDLE = 2;
 const END = 3;
 
 class RTLChar extends String {
-    constructor(string) {
-        super(string);
+  constructor(string) {
+    super(string);
 
-        this.left = this.isLeft();
-        this.right = this.isRight();
-        this.rightOnly = this.isRightOnly();
-        this.leftOnly = this.isLeftOnly();
-        this.both = this.isMiddle();
+    this.left = this.isLeft();
+    this.right = this.isRight();
+    this.rightOnly = this.isRightOnly();
+    this.leftOnly = this.isLeftOnly();
+    this.both = this.isMiddle();
+  }
+
+  isAlefChar() {
+    return RTLChar.alefChars.indexOf(this) >= 0;
+  }
+
+  isMiddle() {
+    return this.isRight(this) && this.isLeft(this);
+  }
+
+  isRightOnly() {
+    return !this.isLeft(this) && this.isRight(this);
+  }
+
+  isLeftOnly() {
+    return this.isRight(this) && !this.isLeft(this);
+  }
+
+  isIsolated() {
+    return !isRight(this) && !this.isLeft();
+  }
+
+  isLeft() {
+    return RTLChar.leftChars.indexOf(this) >= 0;
+  }
+
+  isRight() {
+    return RTLChar.rightChars.indexOf(this) >= 0;
+  }
+
+  isBracket() {
+    return RTLChar.brackets.indexOf(this) >= 0;
+  }
+
+  isHaraka() {
+    return RTLChar.harakat.indexOf(this) >= 0;
+  }
+
+  isEOL() {
+    return "\n\r".indexOf(this) >= 0;
+  }
+
+  isSymbol() {
+    return RTLChar.symbols.indexOf(this) >= 0;
+  }
+
+  toBracket() {
+    let bracketIndex = RTLChar.brackets.indexOf(this);
+
+    if (bracketIndex >= 0) {
+      if (bracketIndex % 2 == 0) {
+        bracketIndex++;
+      } else {
+        bracketIndex--;
+      }
     }
 
-    isAlefChar() {
-        return RTLChar.alefChars.indexOf(this) >= 0;
+    return RTLChar.brackets[bracketIndex];
+  }
+
+  getPos(charBefore, charAfter) {
+    // Handle single character
+    if (!charBefore && !charAfter) return ISOLATED;
+
+    // Handle first character
+    if (!charBefore) {
+      if (charAfter.right && this.left) return START;
+      return ISOLATED;
     }
 
-    isMiddle() {
-        return this.isRight(this) && this.isLeft(this);
+    // Handle last character
+    if (!charAfter) {
+      if (this.right && charBefore.left) return END;
+      return ISOLATED;
     }
 
-    isRightOnly() {
-        return !this.isLeft(this) && this.isRight(this);
+    // Handle character in middle
+
+    // Handle character that can connect to both ends
+    if (this.both) {
+      if (charBefore.left && charAfter.right) return MIDDLE;
+      if (charBefore.left && !charAfter.right) return END;
+      if (!charBefore.left && charAfter.right) return START;
+      return ISOLATED;
     }
 
-    isLeftOnly() {
-        return this.isRight(this) && !this.isLeft(this);
+    // Handle character that can connect to right only
+    if (this.rightOnly) {
+      if (charBefore.left) return END;
     }
 
-    isIsolated() {
-        return !isRight(this) && !this.isLeft();
+    // Handle character that can connect to left only
+    if (this.leftOnly) {
+      if (charAfter.right) return START;
     }
 
-    isLeft() {
-        return RTLChar.leftChars.indexOf(this) >= 0;
-    }
-
-    isRight() {
-        return RTLChar.rightChars.indexOf(this) >= 0;
-    }
-
-    isBracket() {
-        return RTLChar.brackets.indexOf(this) >= 0;
-    }
-
-    isHaraka() {
-        return RTLChar.harakat.indexOf(this) >= 0;
-    }
-
-    isEOL() {
-        return "\n\r".indexOf(this) >= 0;
-    }
-
-    isSymbol() {
-        return RTLChar.symbols.indexOf(this) >= 0;
-    }
-
-    toBracket() {
-        let bracketIndex = RTLChar.brackets.indexOf(this);
-
-        if (bracketIndex >= 0) {
-            if (bracketIndex % 2 == 0) {
-                bracketIndex++;
-            } else {
-                bracketIndex--;
-            }
-        }
-
-        return RTLChar.brackets[bracketIndex];
-    }
-
-    getPos(charBefore, charAfter) {
-        // Handle single character
-        if (!charBefore && !charAfter) return ISOLATED;
-        
-        // Handle first character
-        if (!charBefore) {
-            if (charAfter.right && this.left) return START;
-            return ISOLATED;
-        }
-        
-        // Handle last character
-        if (!charAfter) {
-            if (this.right && charBefore.left) return END;
-            return ISOLATED;
-        }
-        
-        // Handle character in middle
-        
-        // Handle character that can connect to both ends
-        if (this.both) {
-            if (charBefore.left && charAfter.right) return MIDDLE;
-            if (charBefore.left && !charAfter.right) return END;
-            if (!charBefore.left && charAfter.right) return START;
-            return ISOLATED;
-        }
-        
-        // Handle character that can connect to right only
-        if (this.rightOnly) {
-            if (charBefore.left) return END;
-        }
-        
-        // Handle character that can connect to left only
-        if (this.leftOnly) {
-            if (charAfter.right) return START;
-        }
-
-        return ISOLATED;
-    }
+    return ISOLATED;
+  }
 }
 
 // Characters that get connected from the right
-defineProperty(RTLChar, "rightChars", "ـئؤرلالآىآةوزظشسيبللأاأتنمكطضصثقفغعهخحجدذلإإ");
+defineProperty(
+  RTLChar,
+  "rightChars",
+  "ـئؤرلالآىآةوزظشسيبللأاأتنمكطضصثقفغعهخحجدذلإإ"
+);
 // Characters that get connected from the left
 defineProperty(RTLChar, "leftChars", "ـئظشسيبلتنمكطضصثقفغعهخحج");
 // Brackets

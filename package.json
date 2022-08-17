@@ -1,6 +1,6 @@
 {
   "name": "gameface-arabic-rtl2",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Library for Arabic language support in Coherent Gameface",
   "homepage": "https://github.com/Stranget0/coherent-arabic-rtl",
   "main": "dist/gameface-arabic-rtl.min.js",
