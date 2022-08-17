@@ -1,9 +1,9 @@
-# gameface-arabic-rtl
+# gameface-arabic-rtl2
 This is a helper function for Arabic language support in [Coherent Gameface](https://coherent-labs.com/products/coherent-gameface/). Since it [does not support](https://coherent-labs.com/Documentation/cpp-gameface/d3/d46/complex-text-layout.html) Arabic out of the box at the moment.
 
 ### Installation
 ```
-npm i gameface-arabic-rtl
+npm i gameface-arabic-rtl2
 ```
 
 ### Example
