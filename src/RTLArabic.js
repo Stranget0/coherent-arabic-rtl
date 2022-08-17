@@ -74,8 +74,9 @@ class RTLArabic extends String {
     let result = "";
     for (let i = 0; i < this.chars.length; i++) {
       const letter = this.chars[i];
-      const arabicNumber = numberToArabic[parseInt(letter) ?? -1];
-      result += arabicNumber ?? letter;
+      const arabicNumber =
+        numberToArabic[isNan(letter) ? -1 : parseInt(letter)];
+      result += arabicNumber || letter;
     }
     this.chars = result.split();
   }
@@ -263,10 +264,10 @@ class RTLArabic extends String {
     return index;
   }
 
-    convert() {
-        if (this.config.numbers) {
-            this.convertNumbers();
-        }
+  convert() {
+    if (this.config.numbers) {
+      this.convertNumbers();
+    }
 
     const len = this.chars.length;
 
